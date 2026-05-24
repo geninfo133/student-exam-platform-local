@@ -8,6 +8,10 @@ from django.conf.urls.static import static
 from django.views.static import serve
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from study_material.views import (
+    StudyMaterialListView, StudyMaterialCreateView,
+    StudyMaterialUpdateView, StudyMaterialDeleteView,
+)
 from accounts.api_views import (
     RegisterView, ProfileView,
     SchoolCreateTeacherView, SchoolCreateStudentView,
@@ -126,6 +130,12 @@ urlpatterns = [
 
     # Progress card
     path('api/progress-card/', ProgressCardView.as_view(), name='api-progress-card'),
+
+    # Study materials
+    path('api/study-materials/', StudyMaterialListView.as_view(), name='api-study-material-list'),
+    path('api/study-materials/create/', StudyMaterialCreateView.as_view(), name='api-study-material-create'),
+    path('api/study-materials/<int:pk>/update/', StudyMaterialUpdateView.as_view(), name='api-study-material-update'),
+    path('api/study-materials/<int:pk>/delete/', StudyMaterialDeleteView.as_view(), name='api-study-material-delete'),
 
     # Site images
     path('api/site-images/', site_images_view, name='api-site-images'),

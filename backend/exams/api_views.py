@@ -82,8 +82,8 @@ class SubjectListView(generics.ListAPIView):
         user = self.request.user
         school = user if user.role == 'school' else user.school
         qs = Subject.objects.filter(is_active=True).annotate(
-            chapter_count=Count('chapters'),
-            question_count=Count('questions'),
+            chapter_count=Count('chapters', distinct=True),
+            question_count=Count('questions', distinct=True),
         )
         
         if school:
