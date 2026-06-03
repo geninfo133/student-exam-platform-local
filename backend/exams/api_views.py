@@ -1221,7 +1221,9 @@ class SchoolDashboardStatsView(APIView):
         school = request.user
         teachers_count = User.objects.filter(school=school, role='teacher').count()
         students_count = User.objects.filter(school=school, role='student').count()
-        exams_count = UserExam.objects.filter(school=school, status='COMPLETED').count()
+        exams_count = AssignedExam.objects.filter(
+            Q(school=school) | Q(teacher__school=school)
+        ).distinct().count()
         papers_count = ExamPaper.objects.filter(school=school).count()
 
         recent_activity = UserExam.objects.filter(
